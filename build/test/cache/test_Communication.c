@@ -59,76 +59,82 @@ void test_readBit_given_xxx_should_xxxx(){
 
 
 
-void test_writeData_given_0xCD_and_addr_0xDEAD_and_data_0xC0_should_sent_out_0xC0DECDCD(){
+void test_writeTurnAround_given_input_become_output(){
+
+  setPinToOutput_CMockExpect(36, 4);
+
+  setPinHigh_CMockExpect(37, 5);
+
+  setPinLow_CMockExpect(38, 5);
 
 
 
-
-
-  setPinToOutput_CMockExpect(38, 4);
-
-  setPinHigh_CMockExpect(39, 5);
-
-  setPinLow_CMockExpect(40, 5);
-
-
-
-  int i;
-
-  int data1 = 0xCD;
-
-  int data2 = 0xDEAD;
-
-  int data3 = 0xC0;
-
-  int dataShift = 0xC0DECDCD >> 1;
-
-
-
-  for (i=31; i>0; i--){
-
-    if (dataShift & 0x0001 == 1){
-
-
-
-
-
-      sendBitHigh(4);
-
-    }
-
-    else
-
-      sendBitLow(4);
-
-    dataShift = dataShift >> 1;
-
-    printf("%d", dataShift);
-
-  }
-
-  writeData(data3, data2, data1);
+  writeTurnAroundIO(4);
 
 }
 
 
 
-void test_readData_given_0xAB_and_addr_0xFACE_should_sent_out_0xABFACE_and_turnaround_and_receive_0xBE(){
+void test_readTurnAround_given_input_become_input(void){
+
+  setPinToInput_CMockExpect(44, 4);
+
+  setPinLow_CMockExpect(45, 5);
+
+  setPinHigh_CMockExpect(46, 5);
 
 
 
+  readTurnAroundIO(4);
+
+}
+
+void test(void){
+
+  int i;
+
+  uint32_t fullData1, fullData2;
+
+  fullData1 = 0xCDDEADC0;
 
 
-  setPinToInput_CMockExpect(65, 4);
 
-  setPinToOutput_CMockExpect(66, 4);
+  setPinToOutput_CMockExpect(105, 4);
 
-  setPinHigh_CMockExpect(67, 5);
+  setPinHigh_CMockExpect(106, 5);
 
-  setPinLow_CMockExpect(68, 5);
-
+  setPinLow_CMockExpect(107, 5);
 
 
 
+  for (i=0; i<32; i++){
+
+    fullData2 = fullData1 & 0x00000001;
+
+    if (fullData2 == 0){
+
+      setPinLow_CMockExpect(112, 4);
+
+      setPinLow_CMockExpect(113, 5);
+
+      setPinHigh_CMockExpect(114, 5);
+
+    }
+
+    else{
+
+      setPinHigh_CMockExpect(117, 4);
+
+      setPinLow_CMockExpect(118, 5);
+
+      setPinHigh_CMockExpect(119, 5);
+
+    }
+
+    fullData1 = fullData1 >> 1;
+
+  }
+
+  writeData(0xC0, 0xDEAD, 0xCD);
 
 }
