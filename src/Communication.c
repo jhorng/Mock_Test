@@ -50,13 +50,13 @@ void writeData(uint8_t data, uint16_t address, uint8_t cmd){
   int i;
   uint8_t newCmd, newData;
   uint16_t newAddress;
-  
+
+  // turn IO to Output
   writeTurnAroundIO(IO_PIN);
 
   // send data
   for (i=0; i<8; i++){
     newData = data & 0x01;
-    printf("%d\n", newData);
     if(newData == 1){
       sendBitHigh(IO_PIN);
     }
@@ -65,11 +65,10 @@ void writeData(uint8_t data, uint16_t address, uint8_t cmd){
     }
     data = data >> 1;
   }
-  
+
   // send address
   for (i=0; i<16; i++){
     newAddress = address & 0x0001;
-    printf("= %d\n", newAddress);
     if(newAddress == 1){
       sendBitHigh(IO_PIN);
     }
@@ -82,7 +81,6 @@ void writeData(uint8_t data, uint16_t address, uint8_t cmd){
   // send commend
   for (i=0; i<8; i++){
     newCmd = cmd & 0x01;
-    printf("%d\n", newCmd);
     if(newCmd == 1){
       sendBitHigh(IO_PIN);
     }
@@ -90,5 +88,50 @@ void writeData(uint8_t data, uint16_t address, uint8_t cmd){
       sendBitLow(IO_PIN);
     }
     cmd = cmd >> 1;
-  } 
+  }
+}
+
+uint8_t readData(uint8_t cmd, uint16_t address){
+  int i;
+  uint8_t newCmd, data, getData;
+  uint16_t newAddress;
+
+  //  turn IO to Output
+  writeTurnAroundIO(IO_PIN);
+
+  // send address
+  for (i=0; i<16; i++){
+    newAddress = address & 0x0001;
+    if(newAddress == 1){
+      sendBitHigh(IO_PIN);
+    }
+    else{
+      sendBitLow(IO_PIN);
+    }
+    address = address >> 1;
+  }
+
+  // send commend
+  for (i=0; i<8; i++){
+    newCmd = cmd & 0x01;
+    if(newCmd == 1){
+      sendBitHigh(IO_PIN);
+    }
+    else{
+      sendBitLow(IO_PIN);
+    }
+    cmd = cmd >> 1;
+  }
+
+  // turn IO to Input
+  readTurnAroundIO(IO_PIN);
+
+  // read the bit at IO
+  for (i=0; i<8; i++){
+    data = readBit(IO_PIN);
+    getData = getData | (data << i);
+    printf("%d", getData);
+  }
+
+  return getData;
 }

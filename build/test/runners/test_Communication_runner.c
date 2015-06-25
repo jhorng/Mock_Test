@@ -40,7 +40,8 @@ extern void test_sendBitLow_given_xxx_should_xxxx(void);
 extern void test_readBit_given_xxx_should_xxxx(void);
 extern void test_writeTurnAround_given_input_become_output(void);
 extern void test_readTurnAround_given_input_become_input(void);
-extern void test(void);
+extern void test_writeData_given_0xCD_and_addr_0xDEAD_and_data_0xC0_should_send_out_0xCDDEADC0(void);
+extern void test_readData_given_0xAB_and_addr_0xFACE_should_send_0xABFACE_and_turnaround_and_receive_0xBE(void);
 
 
 //=======Mock Management=====
@@ -81,7 +82,8 @@ int main(void)
   RUN_TEST(test_readBit_given_xxx_should_xxxx, 27);
   RUN_TEST(test_writeTurnAround_given_input_become_output, 35);
   RUN_TEST(test_readTurnAround_given_input_become_input, 43);
-  RUN_TEST(test, 51);
+  RUN_TEST(test_writeData_given_0xCD_and_addr_0xDEAD_and_data_0xC0_should_send_out_0xCDDEADC0, 51);
+  RUN_TEST(test_readData_given_0xAB_and_addr_0xFACE_should_send_0xABFACE_and_turnaround_and_receive_0xBE, 77);
 
   CMock_Guts_MemFreeFinal();
   return (UnityEnd());

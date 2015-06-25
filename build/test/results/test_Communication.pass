@@ -18,47 +18,19 @@
 - :test: test_readTurnAround_given_input_become_input
   :line: 43
   :message: ''
-- :test: test
+- :test: test_writeData_given_0xCD_and_addr_0xDEAD_and_data_0xC0_should_send_out_0xCDDEADC0
   :line: 51
+  :message: ''
+- :test: test_readData_given_0xAB_and_addr_0xFACE_should_send_0xABFACE_and_turnaround_and_receive_0xBE
+  :line: 77
   :message: ''
 :failures: []
 :ignores: []
 :counts:
-  :total: 6
-  :passed: 6
+  :total: 7
+  :passed: 7
   :failed: 0
   :ignored: 0
 :stdout:
-- "-0"
-- "-0"
-- "-0"
-- "-0"
-- "-0"
-- "-0"
-- "-1"
-- "-1"
-- "= 1"
-- "= 0"
-- "= 1"
-- "= 1"
-- "= 0"
-- "= 1"
-- "= 0"
-- "= 1"
-- "= 0"
-- "= 1"
-- "= 1"
-- "= 1"
-- "= 1"
-- "= 0"
-- "= 1"
-- "= 1"
-- '1'
-- '0'
-- '1'
-- '1'
-- '0'
-- '0'
-- '1'
-- '1'
+- 02614306262190
 - ''
